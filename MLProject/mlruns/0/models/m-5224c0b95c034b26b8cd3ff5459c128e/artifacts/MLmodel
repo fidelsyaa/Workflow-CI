@@ -1,0 +1,39 @@
+artifact_path: file:///C:/Users/fidel/Downloads/Workflow-CI/MLProject/mlruns/0/models/m-5224c0b95c034b26b8cd3ff5459c128e/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.2
+    skops_trusted_types: null
+is_signature_from_type_hint: false
+mlflow_version: 3.12.0
+model_id: m-5224c0b95c034b26b8cd3ff5459c128e
+model_size_bytes: 11816013
+model_uuid: m-5224c0b95c034b26b8cd3ff5459c128e
+prompts: null
+run_id: 44981c27bf384bfd8fa8ec6f6e1cb51f
+signature:
+  inputs: '[{"type": "double", "name": "age", "required": true}, {"type": "double",
+    "name": "gender", "required": true}, {"type": "double", "name": "employment_status",
+    "required": true}, {"type": "double", "name": "work_environment", "required":
+    true}, {"type": "double", "name": "mental_health_history", "required": true},
+    {"type": "double", "name": "seeks_treatment", "required": true}, {"type": "double",
+    "name": "stress_level", "required": true}, {"type": "double", "name": "sleep_hours",
+    "required": true}, {"type": "double", "name": "physical_activity_days", "required":
+    true}, {"type": "double", "name": "depression_score", "required": true}, {"type":
+    "double", "name": "anxiety_score", "required": true}, {"type": "double", "name":
+    "social_support_score", "required": true}, {"type": "double", "name": "productivity_score",
+    "required": true}, {"type": "double", "name": "age_group", "required": true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-06-01 18:50:10.743384'
