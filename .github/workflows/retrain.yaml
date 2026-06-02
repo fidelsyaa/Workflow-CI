@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.10"
 
       - name: Install Dependencies
         run: |
@@ -62,12 +62,15 @@ jobs:
           echo $MODEL_DIR
 
       - name: Build Docker Image
-        env:
-          MLFLOW_DISABLE_ENV_CREATION: true
         run: |
+          MODEL_PATH=$(find MLProject/mlruns -name MLmodel | head -n 1)
+          MODEL_DIR=$(dirname "$MODEL_PATH")
+
           mlflow models build-docker \
-            -m $MODEL_DIR \
-            -n mental-health-model
+            -m "$MODEL_DIR" \
+            -n mental-health-model \
+            --enable-mlserver \
+            --platform linux/amd64
 
       - name: Tag Docker Image
         run: |
