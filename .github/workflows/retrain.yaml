@@ -23,10 +23,17 @@ jobs:
           pip install numpy
           pip install scikit-learn
 
+      - name: Install Conda
+        uses: conda-incubator/setup-miniconda@v3
+        with:
+          auto-update-conda: true
+          python-version: "3.10"
+
       - name: Run MLflow Project
         run: |
           cd MLProject
-          mlflow run . --env-manager local
+          # Gunakan conda environment manager
+          mlflow run . --env-manager conda
 
       - name: Upload MLflow Artifacts
         uses: actions/upload-artifact@v4
@@ -55,10 +62,12 @@ jobs:
 
       - name: Build Docker Image
         run: |
+          # Build docker dengan Python 3.10
           mlflow models build-docker \
             -m "$MODEL_DIR" \
             -n mental-health-model \
-            --enable-mlserver
+            --enable-mlserver \
+            --python-version 3.10
 
       - name: Tag Docker Image
         run: |

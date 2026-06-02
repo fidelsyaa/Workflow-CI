@@ -1,0 +1,23 @@
+artifact_path: file:///C:/Users/fidel/Downloads/Workflow-CI/MLProject/mlruns/0/models/m-db45010250ca428596be9661633f938d/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.3
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.5.2
+    skops_trusted_types: null
+mlflow_version: 3.12.0
+model_id: m-db45010250ca428596be9661633f938d
+model_size_bytes: 11816065
+model_uuid: m-db45010250ca428596be9661633f938d
+prompts: null
+run_id: b5c6dbaf297b4dc88ecccf21ede0a111
+utc_time_created: '2026-06-02 13:43:13.756804'
