@@ -5,10 +5,8 @@ channels:
   - defaults
 
 dependencies:
-  - python=3.10  # Ganti ke 3.10 untuk kompatibilitas
-  
+  - python=3.10
   - pip
-  
   - pip:
       - mlflow==2.19.0
       - pandas

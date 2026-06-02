@@ -25,14 +25,14 @@ jobs:
 
       - name: Run MLflow Project
         run: |
-          # Pastikan di direktori yang benar
+          cd MLProject
           mlflow run . --env-manager local
 
       - name: Upload MLflow Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: mlflow-artifacts
-          path: ./mlruns  # Path relatif dari root
+          path: MLProject/mlruns
 
       - name: Login Docker Hub
         uses: docker/login-action@v3
@@ -41,27 +41,20 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Find Model Path
-        id: find_model
         run: |
-          # Cari file MLmodel yang terbaru
-          MODEL_PATH=$(find ./mlruns -name "MLmodel" -type f | head -n 1)
+          MODEL_PATH=$(find MLProject/mlruns -name "MLmodel" -type f | head -n 1)
           
           if [ -z "$MODEL_PATH" ]; then
-            echo "Model tidak ditemukan!"
+            echo "❌ Model tidak ditemukan!"
             exit 1
           fi
           
           MODEL_DIR=$(dirname "$MODEL_PATH")
           echo "MODEL_DIR=$MODEL_DIR" >> $GITHUB_ENV
-          echo "Model found at: $MODEL_DIR"
-          
-          # List isi direktori untuk debugging
-          ls -la "$MODEL_DIR"
+          echo "✅ Model ditemukan di: $MODEL_DIR"
 
       - name: Build Docker Image
         run: |
-          echo "Building Docker image from model in: $MODEL_DIR"
-          
           mlflow models build-docker \
             -m "$MODEL_DIR" \
             -n mental-health-model \
