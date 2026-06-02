@@ -89,7 +89,7 @@ jobs:
           mlflow models build-docker \
             -m "$MODEL_DIR" \
             -n mental-health-model \
-            --enable-mlserver
+          
 
       # =========================
       # Tag Docker Image
