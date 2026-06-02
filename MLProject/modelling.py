@@ -4,6 +4,7 @@ import mlflow.sklearn
 import pandas as pd
 import os
 import shutil
+import time
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
@@ -21,8 +22,8 @@ if os.path.exists("mlruns"):
     try:
         shutil.rmtree("mlruns")
         print("✅ Old mlruns removed")
-    except:
-        print("⚠️ Could not remove old mlruns")
+    except Exception as e:
+        print(f"⚠️ Could not remove old mlruns: {e}")
 
 # Set tracking URI ke local directory
 mlflow.set_tracking_uri("file:./mlruns")
@@ -46,8 +47,10 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 #%%
-# TRAINING dengan MLflow tracking
-with mlflow.start_run():
+# TRAINING dengan MLflow tracking - gunakan run_name unik
+run_name = f"run_{int(time.time())}"
+
+with mlflow.start_run(run_name=run_name, nested=False):
     # Log parameters
     mlflow.log_param("n_estimators", 100)
     mlflow.log_param("random_state", 42)
@@ -98,4 +101,5 @@ with mlflow.start_run():
     print("=" * 50)
     
     print(f"\n✅ Run ID: {mlflow.active_run().info.run_id}")
+    print(f"✅ Run Name: {run_name}")
     print(f"✅ Model saved at: mlruns/")

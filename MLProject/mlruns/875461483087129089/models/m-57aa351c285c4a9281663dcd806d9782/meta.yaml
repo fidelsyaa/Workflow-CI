@@ -1,0 +1,10 @@
+artifact_location: file:///C:/Users/fidel/Downloads/Workflow-CI/MLProject/mlruns/875461483087129089/models/m-57aa351c285c4a9281663dcd806d9782/artifacts
+creation_timestamp: 1780409443299
+experiment_id: '875461483087129089'
+last_updated_timestamp: 1780409449766
+model_id: m-57aa351c285c4a9281663dcd806d9782
+model_type: null
+name: model
+source_run_id: 570ca818afd64ea994621b54b38cb76b
+status: 2
+status_message: null

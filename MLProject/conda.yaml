@@ -8,8 +8,7 @@ dependencies:
   - python=3.10
   - pip
   - pip:
-      - mlflow==2.19.0
+      - mlflow
       - pandas
       - numpy
       - scikit-learn
-      - click==8.0.4  # Tambahkan ini untuk kompatibilitas
