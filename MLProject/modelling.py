@@ -15,9 +15,8 @@ from sklearn.metrics import (
     classification_report
 )
 
-# Set environment untuk MLflow
-os.environ['MLFLOW_CONDA_HOME'] = '/usr/local'
-os.environ['MLFLOW_PYTHON_BIN'] = 'python3.10'
+# Set tracking URI
+mlflow.set_tracking_uri("file:./mlruns")
 
 #%%
 # load dataset
@@ -64,12 +63,8 @@ with mlflow.start_run():
     mlflow.log_metric("f1_score", f1)
     mlflow.log_metric("roc_auc", roc_auc)
     
-    # Log model dengan environment
-    mlflow.sklearn.log_model(
-        model, 
-        "model",
-        registered_model_name="mental-health-model"
-    )
+    # Log model
+    mlflow.sklearn.log_model(model, "model")
     
     # PRINT RESULT
     print("=" * 50)

@@ -1,0 +1,9 @@
+# python_env.yaml
+python: "3.10"
+build_dependencies:
+  - pip
+dependencies:
+  - mlflow==2.19.0
+  - pandas
+  - numpy
+  - scikit-learn
