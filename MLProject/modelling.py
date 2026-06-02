@@ -1,9 +1,7 @@
-#%%
 import mlflow
 import mlflow.sklearn
 import pandas as pd
 import os
-import shutil
 import time
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -17,15 +15,12 @@ from sklearn.metrics import (
     classification_report
 )
 
-#%%
 # =========================
-# FIX MLflow Tracking (WAJIB ADVANCE)
+# FIX MLflow Tracking (WAJIB)
 # =========================
-mlflow.set_tracking_uri("file:./mlruns")
-
+mlflow.set_tracking_uri("sqlite:///mlflow.db")
 mlflow.set_experiment("mental_health_experiment")
 
-#%%
 # =========================
 # Load dataset
 # =========================
@@ -38,8 +33,6 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-
-#%%
 # =========================
 # MLflow Training
 # =========================
@@ -60,27 +53,12 @@ with mlflow.start_run(run_name=run_name):
     y_pred = model.predict(X_test)
     y_prob = model.predict_proba(X_test)
 
-    accuracy = accuracy_score(y_test, y_pred)
-    precision = precision_score(y_test, y_pred, average='weighted')
-    recall = recall_score(y_test, y_pred, average='weighted')
-    f1 = f1_score(y_test, y_pred, average='weighted')
-    roc_auc = roc_auc_score(y_test, y_prob, multi_class='ovr')
-
-    mlflow.log_metric("accuracy", accuracy)
-    mlflow.log_metric("precision", precision)
-    mlflow.log_metric("recall", recall)
-    mlflow.log_metric("f1_score", f1)
-    mlflow.log_metric("roc_auc", roc_auc)
+    mlflow.log_metric("accuracy", accuracy_score(y_test, y_pred))
+    mlflow.log_metric("precision", precision_score(y_test, y_pred, average='weighted'))
+    mlflow.log_metric("recall", recall_score(y_test, y_pred, average='weighted'))
+    mlflow.log_metric("f1_score", f1_score(y_test, y_pred, average='weighted'))
+    mlflow.log_metric("roc_auc", roc_auc_score(y_test, y_prob, multi_class='ovr'))
 
     mlflow.sklearn.log_model(model, "model")
 
-    print("Accuracy:", accuracy)
-    print("Precision:", precision)
-    print("Recall:", recall)
-    print("F1:", f1)
-    print("ROC AUC:", roc_auc)
-
-    print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred))
-    print("\nClassification Report:\n", classification_report(y_test, y_pred))
-
-    print("\nRun ID:", mlflow.active_run().info.run_id)
+    print("Run ID:", mlflow.active_run().info.run_id)
