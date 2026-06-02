@@ -1,0 +1,12 @@
+Docker Image for Mental Health Classification (MLflow CI/CD)
+
+Docker Hub Repository:
+https://hub.docker.com/repository/docker/fidelsyaa/mental-health-model/general
+
+Image Name:
+fidelsyaa/mental-health-model:latest
+
+Description:
+This Docker image is automatically generated using MLflow models build-docker
+from GitHub Actions CI pipeline. The model is trained using RandomForestClassifier
+for mental health risk classification.
