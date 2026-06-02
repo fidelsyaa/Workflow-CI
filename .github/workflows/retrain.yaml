@@ -20,42 +20,53 @@ jobs:
           activate-environment: mental-health-env
           environment-file: MLProject/conda.yaml
 
-      - name: Run Training
+      # =========================
+      # RUN MLflow PROJECT (ADVANCE FIX)
+      # =========================
+      - name: Run MLflow Project
         shell: bash -l {0}
         run: |
           cd MLProject
-          # Hapus mlruns lama jika ada
           rm -rf mlruns
-          # Jalankan training langsung dengan python
-          python modelling.py
+          mlflow run . -e main
 
+      # =========================
+      # Upload artifact (SKILLED REQUIREMENT)
+      # =========================
       - name: Upload MLflow Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: mlflow-artifacts
           path: MLProject/mlruns
 
+      # =========================
+      # Docker Hub Login
+      # =========================
       - name: Login Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      # =========================
+      # Find MLflow Model
+      # =========================
       - name: Find Model Path
         run: |
           MODEL_PATH=$(find MLProject/mlruns -name "MLmodel" -type f | head -n 1)
-          
+
           if [ -z "$MODEL_PATH" ]; then
-            echo "❌ Model tidak ditemukan!"
-            echo "Isi direktori mlruns:"
-            ls -la MLProject/mlruns/ || echo "Folder mlruns tidak ada"
+            echo "Model tidak ditemukan"
+            ls -R MLProject/mlruns || true
             exit 1
           fi
-          
+
           MODEL_DIR=$(dirname "$MODEL_PATH")
           echo "MODEL_DIR=$MODEL_DIR" >> $GITHUB_ENV
-          echo "✅ Model ditemukan di: $MODEL_DIR"
 
+      # =========================
+      # Build Docker Image (ADVANCE REQUIREMENT)
+      # =========================
       - name: Build Docker Image
         run: |
           mlflow models build-docker \
@@ -63,14 +74,17 @@ jobs:
             -n mental-health-model \
             --enable-mlserver
 
+      # =========================
+      # Tag Docker Image
+      # =========================
       - name: Tag Docker Image
         run: |
-          docker tag mental-health-model \
-            ${{ secrets.DOCKER_USERNAME }}/mental-health-model:latest
-          
-          docker tag mental-health-model \
-            ${{ secrets.DOCKER_USERNAME }}/mental-health-model:${{ github.run_id }}
+          docker tag mental-health-model ${{ secrets.DOCKER_USERNAME }}/mental-health-model:latest
+          docker tag mental-health-model ${{ secrets.DOCKER_USERNAME }}/mental-health-model:${{ github.run_id }}
 
+      # =========================
+      # Push Docker Image
+      # =========================
       - name: Push Docker Image
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/mental-health-model:latest
