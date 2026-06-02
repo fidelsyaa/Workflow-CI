@@ -1,0 +1,14 @@
+artifact_uri: file:///C:/Users/fidel/Downloads/Workflow-CI/MLProject/mlruns/555258735468424717/d85ff6d0d53b4998946e8cb899d95dfc/artifacts
+end_time: 1780409113236
+entry_point_name: ''
+experiment_id: '555258735468424717'
+lifecycle_stage: active
+run_id: d85ff6d0d53b4998946e8cb899d95dfc
+run_name: mysterious-dove-144
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1780409102798
+status: 3
+tags: []
+user_id: fidel

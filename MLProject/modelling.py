@@ -3,6 +3,7 @@ import mlflow
 import mlflow.sklearn
 import pandas as pd
 import os
+import shutil
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
@@ -15,8 +16,19 @@ from sklearn.metrics import (
     classification_report
 )
 
-# Set tracking URI
+# Clean up existing mlruns if corrupt
+if os.path.exists("mlruns"):
+    try:
+        shutil.rmtree("mlruns")
+        print("✅ Old mlruns removed")
+    except:
+        print("⚠️ Could not remove old mlruns")
+
+# Set tracking URI ke local directory
 mlflow.set_tracking_uri("file:./mlruns")
+
+# Buat experiment baru
+mlflow.set_experiment("mental_health_experiment")
 
 #%%
 # load dataset
@@ -36,7 +48,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 #%%
 # TRAINING dengan MLflow tracking
 with mlflow.start_run():
-    mlflow.sklearn.autolog()
+    # Log parameters
+    mlflow.log_param("n_estimators", 100)
+    mlflow.log_param("random_state", 42)
     
     model = RandomForestClassifier(
         n_estimators=100,
@@ -82,3 +96,6 @@ with mlflow.start_run():
     print("\nClassification Report:")
     print(report)
     print("=" * 50)
+    
+    print(f"\n✅ Run ID: {mlflow.active_run().info.run_id}")
+    print(f"✅ Model saved at: mlruns/")

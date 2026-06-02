@@ -5,10 +5,11 @@ channels:
   - defaults
 
 dependencies:
-  - python=3.10  # ← Penting: Python 3.10, BUKAN 3.9
+  - python=3.10
   - pip
   - pip:
       - mlflow==2.19.0
       - pandas
       - numpy
       - scikit-learn
+      - click==8.0.4  # Tambahkan ini untuk kompatibilitas
