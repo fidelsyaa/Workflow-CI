@@ -66,11 +66,11 @@ jobs:
           MODEL_PATH=$(find MLProject/mlruns -name MLmodel | head -n 1)
           MODEL_DIR=$(dirname "$MODEL_PATH")
 
+          echo "Model dir: $MODEL_DIR"
+
           mlflow models build-docker \
             -m "$MODEL_DIR" \
-            -n mental-health-model \
-            --enable-mlserver \
-            --platform linux/amd64
+            -n mental-health-model
 
       - name: Tag Docker Image
         run: |
