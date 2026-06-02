@@ -46,7 +46,9 @@ X_train, X_test, y_train, y_test = train_test_split(
 )
 
 #%%
-mlflow.sklearn.autolog()
+with mlflow.start_run():
+
+    mlflow.sklearn.autolog()
 
 model = RandomForestClassifier(
     n_estimators=100,

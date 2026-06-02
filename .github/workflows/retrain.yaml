@@ -46,6 +46,11 @@ jobs:
         run: |
           docker info
 
+      - name: Show MLflow Structure
+        run: |
+          cd MLProject
+          find mlruns
+
       - name: Build Docker Image
         run: |
           cd MLProject
