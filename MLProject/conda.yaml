@@ -2,12 +2,13 @@ name: mental-health-env
 
 channels:
   - conda-forge
+  - defaults
 
 dependencies:
-  - python=3.12
-
+  - python=3.10  # Ganti ke 3.10 untuk kompatibilitas
+  
   - pip
-
+  
   - pip:
       - mlflow==2.19.0
       - pandas
