@@ -21,7 +21,7 @@ from sklearn.metrics import (
 # =========================
 # FIX MLflow Tracking (WAJIB ADVANCE)
 # =========================
-mlflow.set_tracking_uri("sqlite:///mlflow.db")
+mlflow.set_tracking_uri("file:./mlruns")
 
 mlflow.set_experiment("mental_health_experiment")
 

@@ -24,10 +24,9 @@ jobs:
       # RUN MLflow PROJECT (ADVANCE FIX)
       # =========================
       - name: Run MLflow Project
-        shell: bash -l {0}
         run: |
           cd MLProject
-          rm -rf mlruns
+          rm -rf mlruns mlflow.db
           mlflow run . -e main
 
       # =========================
