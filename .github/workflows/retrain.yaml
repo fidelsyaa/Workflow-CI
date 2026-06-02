@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # =========================
+      # SETUP CONDA
+      # =========================
       - name: Setup Miniconda
         uses: conda-incubator/setup-miniconda@v3
         with:
@@ -21,9 +24,22 @@ jobs:
           environment-file: MLProject/conda.yaml
 
       # =========================
-      # RUN MLflow PROJECT (ADVANCE FIX)
+      # DEBUG + VERIFY ENV (ANTI ERROR "mlflow not found")
+      # =========================
+      - name: Debug Environment
+        shell: bash -l {0}
+        run: |
+          which python
+          which pip
+          pip install mlflow
+          which mlflow
+          mlflow --version
+
+      # =========================
+      # RUN MLflow PROJECT (FIXED)
       # =========================
       - name: Run MLflow Project
+        shell: bash -l {0}
         run: |
           cd MLProject
           rm -rf mlruns mlflow.db
@@ -51,6 +67,7 @@ jobs:
       # Find MLflow Model
       # =========================
       - name: Find Model Path
+        shell: bash -l {0}
         run: |
           MODEL_PATH=$(find MLProject/mlruns -name "MLmodel" -type f | head -n 1)
 
@@ -67,6 +84,7 @@ jobs:
       # Build Docker Image (ADVANCE REQUIREMENT)
       # =========================
       - name: Build Docker Image
+        shell: bash -l {0}
         run: |
           mlflow models build-docker \
             -m "$MODEL_DIR" \
