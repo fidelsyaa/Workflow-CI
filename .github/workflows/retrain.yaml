@@ -62,6 +62,8 @@ jobs:
           echo $MODEL_DIR
 
       - name: Build Docker Image
+        env:
+          MLFLOW_DISABLE_ENV_CREATION: true
         run: |
           mlflow models build-docker \
             -m $MODEL_DIR \
